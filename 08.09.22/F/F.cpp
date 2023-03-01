@@ -2,21 +2,22 @@
 
 int main()
 {
-	char s[101], d[101];
+	char s[200], d[200];
 	int w = 0, r = 0;
 	fgets(s, 101, stdin);
 	fgets(d, 101, stdin);
-	while (s[w] != '\0')
+	while (s[w] != '\0' && s[w] != '\n')
 	{
 		w++;
 	}
-	while (d[r] != '\0')
+	while (d[r] != '\0' && d[r] != '\n')
 	{
 		r++;
 	}
-	for (int i = 0; i < w - 1; i++)
+	//printf("%d\n", w);
+	for (int i = 0; i < w; i++)
 	{
-		for (int j = 0; j < r - 1; j++)
+		for (int j = 0; j < r; j++)
 		{
 			if (s[i] == d[j])
 			{
@@ -24,7 +25,7 @@ int main()
 			}
 		}
 	}
-	for (int i = 0; i < w - 1; i++)
+	for (int i = 0; i < w; i++)
 	{
 		if (s[i] != 0)
 		{
