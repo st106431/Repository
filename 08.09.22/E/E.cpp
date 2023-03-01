@@ -6,10 +6,10 @@ int main()
 	int a[100]{ 0 };
 	char c;
 	int k = 0, h = 0, w = 0;
-    gets_s(s);
-	while (s[w] != ' ' || w != 99)
+	fgets(s, 100, stdin);
+	while (s[w] != '\0' && w < 100)
 	{
-		w++;
+		w++; 
 	}
 	c = s[0];
 	for (int i = 0; i < w; i++)
