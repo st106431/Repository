@@ -4,8 +4,8 @@ int main()
 {
 	char s[200], d[200];
 	int w = 0, r = 0;
-	fgets(s, 101, stdin);
-	fgets(d, 101, stdin);
+	fgets(s, 102, stdin);
+	fgets(d, 102, stdin);
 	while (s[w] != '\0' && s[w] != '\n')
 	{
 		w++;
