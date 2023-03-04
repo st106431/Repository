@@ -5,61 +5,50 @@
 #include <algorithm>
 #include <iterator>
 #include <random>
+#include <time.h>
 using namespace std;
 #define _CRT_SECURE_NO_WARNINGS
 
-int N;
-int M;
-int temp;
-int k;
-long long* hx = new long long[M + N];
-int t[1000001]{ 0 };
-
-long long hash_t(set<int> s, long long h)
-{
-	for (auto elem : s)
-	{
-		h = h ^ t[elem];
-	}
-	return h;
-}
-
 int main()
 {
+    long long t[1000001]{ 0 };
+    int N;
+    int M;
+    int temp;
+    int k;
 	cin >> N >> M;
-	set<int>* S = new set<int>[M + N];
-	int** mas = new int* [M];
-	mt19937 rng(123456);
-	uniform_int_distribution <int> random(1, 1000000);
-	int h = random(rng);
+	long long* hx = new long long[M + N];
+	srand(time(NULL));
+	mt19937 rng(rand());
+	uniform_int_distribution <long long> random(1, 18446744073709600000);
+	long long h = random(rng);
 	for (int i = 1; i < 1000000; i++)
 	{
 		t[i] = random(rng);
 	}
+	int** mas = new int* [M];
 	for (int i = 0; i < M; i++)
 	{
 		mas[i] = new int[2];
 	}
 	for (int i = 0; i < N; i++)
 	{
+	    hx[i] = h;
 		cin >> k;
 		for (int j = 0; j < k; j++)
 		{
 			cin >> temp;
-			S[i].insert(temp);
+			hx[i] = hx[i] ^ t[temp];
 		}
 	}
 	for (int i = 0; i < M; i++)
 	{
 		cin >> mas[i][0] >> mas[i][1];
 	}
-	for (int j = 0; j < N; j++)
-	{
-		hx[j] = hash_t(S[j], h);
-	}
 	for (int i = 0; i < M; i++)
 	{
-		hx[N + i] = hash_t(S[mas[i][0] - 1], h) ^ hash_t(S[mas[i][1] - 1], h);
+		hx[N + i] = hx[mas[i][0] - 1] ^ hx[mas[i][1] - 1];
+		//cout << hx[N + i] << endl;
 		int count = 0;
 		for (int w = 0; w < N + i; w++)
 		{
