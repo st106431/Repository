@@ -1,0 +1,73 @@
+#include <iostream>
+#include <random>
+#include <set>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <random>
+using namespace std;
+#define _CRT_SECURE_NO_WARNINGS
+
+int N;
+int M;
+int temp;
+int k;
+long long* hx = new long long[M + N];
+int t[1000001]{ 0 };
+
+long long hash_t(set<int> s, long long h)
+{
+	for (auto elem : s)
+	{
+		h = h ^ t[elem];
+	}
+	return h;
+}
+
+int main()
+{
+	cin >> N >> M;
+	set<int>* S = new set<int>[M + N];
+	int** mas = new int* [M];
+	mt19937 rng(123456);
+	uniform_int_distribution <int> random(1, 1000000);
+	int h = random(rng);
+	for (int i = 1; i < 1000000; i++)
+	{
+		t[i] = random(rng);
+	}
+	for (int i = 0; i < M; i++)
+	{
+		mas[i] = new int[2];
+	}
+	for (int i = 0; i < N; i++)
+	{
+		cin >> k;
+		for (int j = 0; j < k; j++)
+		{
+			cin >> temp;
+			S[i].insert(temp);
+		}
+	}
+	for (int i = 0; i < M; i++)
+	{
+		cin >> mas[i][0] >> mas[i][1];
+	}
+	for (int j = 0; j < N; j++)
+	{
+		hx[j] = hash_t(S[j], h);
+	}
+	for (int i = 0; i < M; i++)
+	{
+		hx[N + i] = hash_t(S[mas[i][0] - 1], h) ^ hash_t(S[mas[i][1] - 1], h);
+		int count = 0;
+		for (int w = 0; w < N + i; w++)
+		{
+			if (hx[N + i] == hx[w])
+			{
+				count++;
+			}
+		}
+		cout << count << " ";
+    }
+}
