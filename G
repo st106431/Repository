@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+#define _CRT_SECURE_NO_WARNINGS
+int temp;
+int buff[199999]{ 0 };
+
+ void ask(int x)
+{
+	cout << "? " << x << endl;
+	fflush(stdout);
+	cin >> temp;
+	buff[x] = temp;
+}
+
+int bin(int l, int r)
+{
+	if (buff[(r + l) / 2] == 0)
+	{
+		ask((r + l) / 2);
+	}
+	if (r - l == 0)
+	{
+		return buff[(r + l) / 2];
+	}
+	else
+	{
+		ask((r + l) / 2 + 1);
+		if (buff[(r + l) / 2] == buff[(r + l) / 2 + 1])
+		{
+			if (((r + l) / 2) % 2 == 0)
+			{
+				return bin(l, (r+l) / 2 - 1);
+			}
+			else
+			{
+				return bin((r + l) / 2 + 2, r);
+			}
+		}
+		ask((r + l) / 2 - 1);
+		if (buff[(r + l) / 2 - 1] == buff[(r + l) / 2])
+		{
+			if (((r + l) / 2 - 1) % 2 == 0)
+			{
+				return bin(l, (r + l) / 2 - 2);
+			}
+			else
+			{
+				return bin((r + l) / 2 + 1, r);
+			}
+		}
+		if (buff[(r + l) / 2] != buff[(r + l) / 2 + 1] && buff[(r + l) / 2 - 1] != buff[(r + l) / 2])
+		{
+			return buff[(r + l) / 2];
+		}
+	}
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	cout << "! " << bin(1, n);
+}
