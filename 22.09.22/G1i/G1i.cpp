@@ -21,7 +21,6 @@ int main()
 {
 	int m, n;
 	int k[6];
-	//multiset<pair<int, int>> s;
 	cin >> m >> n;
 	if (m <= n)
 	{
@@ -42,7 +41,7 @@ int main()
 			{
 				cout << piece(s).first << " " << piece(s).second << " " << 1 << " " << mn << " " << mx - 1 << " " << mn << endl;
 				fflush(stdout);
-				s.erase(make_pair(piece(s).first, piece(s).second));
+				s.erase(s.find(make_pair(piece(s).first, piece(s).second)));
 				s.insert(make_pair(1, mn));
 				if (mx - 1 <= mn)
 				{
@@ -61,11 +60,11 @@ int main()
 					cin >> k[1] >> k[2] >> k[3] >> k[4] >> k[5];
 					if (k[0] <= k[1])
 					{
-						s.erase(make_pair(k[0], k[1]));
+						s.erase(s.find(make_pair(k[0], k[1])));
 					}
 					else
 					{
-						s.erase(make_pair(k[1], k[0]));
+						s.erase(s.find(make_pair(k[1], k[0])));
 					}
 					if (k[2] <= k[3])
 					{
