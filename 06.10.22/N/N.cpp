@@ -19,14 +19,25 @@ bool prime(long long n)
 
 long long powMod(long long a, long long b, long long m)
 {
+	long long h;
 	long long res = 1 % m;
 	for (; b > 0; b >>= 1)
 	{
 		if (b & 1)
 		{
-			res = (res * 1LL * a) % m;
+			h = res;
+			for (int i = 1; i < (a % m); i++)
+			{
+				h = (h + res) % m;
+			}
+			res = h;
 		}
-		a = (a * 1LL * a) % m;
+		h = a;
+		for (int j = 1; j < (a % m); j++)
+		{
+			h = (h + (a % m)) % m;
+		}
+		a = h;
 	}
 	return res;
 }
