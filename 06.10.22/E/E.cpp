@@ -31,28 +31,47 @@ int exp(int n, int p)
 
 int main()
 {
-long long n;
-long long i = 1;
-int j = 0;
-cin >> n;
-int number = 1;
-int pri = 0;
-int k = 1;
-long long* s_p = new long long[max(n, (long long)4)];
-for (long long i = 1; i <= max(sqrt(n), 10.0); i++)
-{
-	if(prime(i) == 1)
+	long long n;
+	long long cb;
+	long long i = 1;
+	int j = 0;
+	cin >> n;
+	int number = 1;
+	int pri = 0;
+	int k = 1;
+	long long* s_p;
+	if (n >= 10000)
 	{
-		s_p[pri] = i;
-		pri++;
+		cb = cbrt(n);
+		s_p = new long long[cb];
+		cout << cb;
+		for (long long i = 1; i <= cb; i++)
+		{
+			if (prime(i) == 1)
+			{
+				s_p[pri] = i;
+				pri++;
+			}
+		}
 	}
-}
+	else
+	{
+		s_p = new long long[max(n, (long long)4)];
+		for (long long i = 1; i <= max(sqrt(n), 10.0); i++)
+		{
+			if (prime(i) == 1)
+			{
+				s_p[pri] = i;
+				pri++;
+			}
+		}
+	}
 while (i < n)
 {
-	if ((i * s_p[j]) <= n)
+	if ((i * s_p[i]) <= n)
 	{
 		i *= s_p[j];
-		number = ((number * (k + 1)) / k);
+		number = (number * (k + 1)) / k;
 		if (j < (pri - 1))
 		{
 			j++;
