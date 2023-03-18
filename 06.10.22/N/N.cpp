@@ -17,6 +17,12 @@ bool prime(long long n)
 	return true;
 }
 
+long long rem(long long e)
+{
+	long long t = (long long)cbrt(e);
+	return (e - (t * t * t));
+}
+
 long long powMod(long long a, long long b, long long m)
 {
 	long long h;
@@ -25,18 +31,29 @@ long long powMod(long long a, long long b, long long m)
 	{
 		if (b & 1)
 		{
+			//h = res;
+			//for (int i = 1; i < (a % m); i++)
+			//{
+			//	h = (h + res) % m;
+			//}
+			//res = h % m;
 			h = res;
-			for (int i = 1; i < (a % m); i++)
-			{
-				h = (h + res) % m;
-			}
-			res = h;
+			res = (res * 1LL * (long long)cbrt(a)) % m;
+			res = (res * 1LL * (long long)cbrt(a)) % m;
+			res = (res * 1LL * (long long)cbrt(a)) % m;
+			res = (res + (h * rem(a))) % m;
 		}
+		//h = a;
+		//for (int j = 1; j < (a % m); j++)
+		//{
+		//	h = (h + (a % m)) % m;
+		//}
+		//a = h % m;
 		h = a;
-		for (int j = 1; j < (a % m); j++)
-		{
-			h = (h + (a % m)) % m;
-		}
+		h = (h * 1LL * (long long)cbrt(a)) % m;
+		h = (h * 1LL * (long long)cbrt(a)) % m;
+		h = (h * 1LL * (long long)cbrt(a)) % m;
+		h = (h + (a * rem(a))) % m;
 		a = h;
 	}
 	return res;
@@ -57,7 +74,7 @@ bool M_R(long long a, long long r, long long N)
 	}
 	else
 	{
-		if (powMod(a, r, N) == 1)
+		if (powMod(a, r, N) == 1 || powMod(a, r, N) == (N - 1))
 		{
 			return true;
 		}

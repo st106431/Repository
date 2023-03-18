@@ -23,13 +23,13 @@ string perv(int p, int x)
 	}
 }
 
-string log(int a, int p) 
+string log(long long a, long long p) 
 {
-	int phi_p = p - 1;
-	int v = 1;
-	int lim = (int)(sqrt(phi_p)) + 1;
-	map <int, int> power;
-	int a_lim = 1;
+	long long phi_p = p - 1;
+	long long v = 1;
+	long long lim = (int)(sqrt(phi_p)) + 1;
+	map <long long, int> power;
+	long long a_lim = 1;
 	for (int i = 0; i <= lim; i++) 
 	{
 		power[a_lim] = i;
@@ -39,7 +39,7 @@ string log(int a, int p)
 	{
 		if (power.count(v))
 		{
-			if (((power[v] - (i * lim)) % phi_p) == 0)
+			if (((power[v] - ((long long)i * lim)) % phi_p) == 0)
 			{
 				return "YES";
 			}
