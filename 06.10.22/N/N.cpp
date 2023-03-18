@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <math.h> 
 using namespace std;
 
 bool prime(long long n)
@@ -20,41 +21,54 @@ bool prime(long long n)
 long long rem(long long e)
 {
 	long long t = (long long)cbrt(e);
-	return (e - (t * t * t));
+	return (e - (t * t * t)) % t;
+}
+
+long long quo(long long e_0)
+{
+	long long t_0 = (long long)cbrt(e_0);
+	return ((e_0 - t_0 * t_0 * t_0) / t_0);
 }
 
 long long powMod(long long a, long long b, long long m)
 {
-	long long h;
+	long long h, temp, cb;
 	long long res = 1 % m;
 	for (; b > 0; b >>= 1)
 	{
 		if (b & 1)
 		{
-			//h = res;
-			//for (int i = 1; i < (a % m); i++)
-			//{
-			//	h = (h + res) % m;
-			//}
-			//res = h % m;
-			h = res;
-			res = (res * 1LL * (long long)cbrt(a)) % m;
-			res = (res * 1LL * (long long)cbrt(a)) % m;
-			res = (res * 1LL * (long long)cbrt(a)) % m;
-			res = (res + (h * rem(a))) % m;
+			h = res % m;
+			if (a != 0)
+			{
+				cb = (long long)cbrt(a);
+				res = (res * 1LL * cb) % m;
+				res = (res * 1LL * cb) % m;
+				res = (res * 1LL * cb) % m;
+				temp = res;
+				res = (res * 1LL * cb) % m;
+				res = (res * 1LL * (((a - (cb * cb * cb)) / cb) % m)) % m;
+				res = (res + (temp * ((a - (cb * cb * cb)) % cb))) % m; 
+			}
+			else
+			{
+				res = 0;
+			}
 		}
-		//h = a;
-		//for (int j = 1; j < (a % m); j++)
-		//{
-		//	h = (h + (a % m)) % m;
-		//}
-		//a = h % m;
-		h = a;
-		h = (h * 1LL * (long long)cbrt(a)) % m;
-		h = (h * 1LL * (long long)cbrt(a)) % m;
-		h = (h * 1LL * (long long)cbrt(a)) % m;
-		h = (h + (a * rem(a))) % m;
-		a = h;
+		h = a % m;
+		cb = (long long)cbrt(a);
+		if (a != 0)
+		{
+			h = (h * 1LL * cb) % m;
+			h = (h * 1LL * cb) % m;
+			h = (h * 1LL * cb) % m;
+			temp = h;
+			h = (h * 1LL * cb) % m;
+			h = (h * 1LL * (((a - (cb * cb * cb)) / cb) % m)) % m;
+			h = (h + (temp * ((a - (cb * cb * cb)) % cb))) % m;
+			a = h;
+			cout << a;
+		}
 	}
 	return res;
 }
