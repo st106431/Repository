@@ -20,19 +20,41 @@ bool prime(long long n)
 
 long long rem(long long e)
 {
-	long long t = (long long)cbrt(e);
-	return (e - (t * t * t)) % t;
+	return (e % 10000);
 }
 
 long long quo(long long e_0)
 {
-	long long t_0 = (long long)cbrt(e_0);
-	return ((e_0 - t_0 * t_0 * t_0) / t_0);
+	return (e_0 / 10000);
+}
+
+long long mult(long long y, long long t, long long m)
+{
+	if (t == 0)
+	{
+		return 0;
+	}
+	if (t == 1)
+	{
+		return y % m;
+	}
+	else
+	{
+		long long pr = mult(y, t / 2, m);
+		if (t % 2 == 0)
+		{
+			return (pr + pr) % m;
+		}
+		else
+		{
+			return (pr + pr + y) % m;
+		}
+	}
 }
 
 long long powMod(long long a, long long b, long long m)
 {
-	long long h, temp, cb;
+	long long h, temp;
 	long long res = 1 % m;
 	for (; b > 0; b >>= 1)
 	{
@@ -41,14 +63,10 @@ long long powMod(long long a, long long b, long long m)
 			h = res % m;
 			if (a != 0)
 			{
-				cb = (long long)cbrt(a);
-				res = (res * 1LL * cb) % m;
-				res = (res * 1LL * cb) % m;
-				res = (res * 1LL * cb) % m;
-				temp = res;
-				res = (res * 1LL * cb) % m;
-				res = (res * 1LL * (((a - (cb * cb * cb)) / cb) % m)) % m;
-				res = (res + (temp * ((a - (cb * cb * cb)) % cb))) % m; 
+				temp = res % m;
+				res = mult(res, quo(a), m);
+				res = (res * 10000) % m;
+				res = ((res + (temp * rem(a) % m))) % m;
 			}
 			else
 			{
@@ -56,18 +74,12 @@ long long powMod(long long a, long long b, long long m)
 			}
 		}
 		h = a % m;
-		cb = (long long)cbrt(a);
 		if (a != 0)
 		{
-			h = (h * 1LL * cb) % m;
-			h = (h * 1LL * cb) % m;
-			h = (h * 1LL * cb) % m;
-			temp = h;
-			h = (h * 1LL * cb) % m;
-			h = (h * 1LL * (((a - (cb * cb * cb)) / cb) % m)) % m;
-			h = (h + (temp * ((a - (cb * cb * cb)) % cb))) % m;
-			a = h;
-			cout << a;
+			temp = a;
+			a = mult(a, quo(a), m);
+			a = (a * 10000) % m;
+			a = (a + (((temp % m) * rem(temp)) % m)) % m;
 		}
 	}
 	return res;

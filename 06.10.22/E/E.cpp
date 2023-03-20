@@ -18,15 +18,10 @@ bool prime(long long n)
 	return true;
 }
 
-int exp(int n, int p)
+void rec(int k, int r, int pri[50], int deg[50], int n, int max)
 {
-	int k = 0;
-	while ((n % p) == 0)
-	{
-		n /= p;
-		k++;
-	}
-	return k;
+	rec(k - 1, r, pri, deg, n, max);
+
 }
 
 int main()
@@ -68,7 +63,7 @@ int main()
 	}
 while (i < n)
 {
-	if ((i * s_p[i]) <= n)
+	if ((i * s_p[j]) <= n)
 	{
 		i *= s_p[j];
 		number = (number * (k + 1)) / k;
