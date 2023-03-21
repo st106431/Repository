@@ -1,8 +1,7 @@
 ﻿#include <iostream>
-#include <map>
 using namespace std;
 
-long long powMod(long long a, long long b, long long m)
+long long powMod(long long a, int b, long long m)
 {
 	long long res = 1 % m;
 	for (; b > 0; b >>= 1)
@@ -11,36 +10,44 @@ long long powMod(long long a, long long b, long long m)
 		{
 			res = (res * 1LL * (a % m)) % m;
 		}
-		a = ((a % m) * 1LL * (a % m)) % m;
+		a = a % m;
+		a = (a * 1LL * a) % m;
 	}
 	return res;
 }
 
-bool prime(long long n)
+int r(long long n, int* tr, int pos)
 {
-	if (n < 2)
+	if (n != 1)
 	{
-		return false;
-	}
-	for (long long d = 2; d * d <= n; d++)
-	{
-		if (n % d == 0)
+		int i = 2;
+		while ((n % i) != 0)
 		{
-			return false;
+			i++;
 		}
+		tr[pos] = i;
+		while (n % i == 0)
+		{
+			n /= i;
+		}
+		pos++;
+		r(n, tr, pos);
 	}
-	return true;
+	else
+	{
+		return pos;
+	}
 }
 
 bool check(long long a, int* f, int l, long long p)
 {
-	if (a % p == 0)
+	if ((a % p) == 0)
 	{
 		return 0;
 	}
 	for (int j = 0; j < l; j++)
 	{
-		if (powMod(a, (long long)f[j], p) == 1)
+		if (powMod(a, f[j], p) == 1)
 		{
 			return 0;
 		}
@@ -53,20 +60,22 @@ int main()
 	int n;
 	long long p;
 	int l = 0;
+	int pos = 0;
 	cin >> n >> p;
 	int* mas = new int[n];
-	int* fact = new int[(p - 1) / 2];
+	int* fact = new int[log2(p - 1)];
 	for (int i = 0; i < n; i++)
 	{
 		cin >> mas[i];
 	}
-	for (long long i = 2; i <= (p - 1) / 2; i++)
+	if (p != 3)
 	{
-		if ((((p - 1) % i) == 0) && (prime(i)))
-		{
-			fact[l] = (p - 1) / i;
-			l++;
-		}
+		l = r(p - 1, fact, pos);
+	}
+	else
+	{
+		fact[0] = 1;
+		l = 1;
 	}
 	for (int i = 0; i < n; i++)
 	{
