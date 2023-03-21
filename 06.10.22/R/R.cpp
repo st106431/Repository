@@ -1,9 +1,9 @@
 ﻿#include <iostream>
 using namespace std;
 
-int mulMod(int a, int b, int m) 
+long long mulMod(long long a, long long b, long long m) 
 {
-	int res = 0;
+	long long res = 0;
 	for (; b > 0; b >>= 1)
 	{
 		if (b & 1)
@@ -16,18 +16,18 @@ int mulMod(int a, int b, int m)
 }
 
 
-int** mult(int** m_1, int k, int m)
+long long** mult(long long** m_1, int k, long long m)
 {
 	if (k == 1)
 	{
 		return m_1;
 	}
-	int sum;
-	int** res = mult(m_1, k - 1, m);
-	int** ip = new int* [2];
+	long long sum;
+	long long** res = mult(m_1, k - 1, m);
+	long long** ip = new long long* [2];
 	for (int i = 0; i < 2; i++)
 	{
-		ip[i] = new int[2];
+		ip[i] = new long long[2];
 	}
 	for (int i = 0; i < 2; i++)
 	{
@@ -44,20 +44,55 @@ int** mult(int** m_1, int k, int m)
 	return ip;
 }
 
+long long** q_mult(long long** m_1, int k, long long m)
+{
+	if (k == 1)
+	{
+		return m_1;
+	}
+	if (k % 2 == 0)
+	{
+		return mult(q_mult(m_1, k / 2, m), 2, m);
+	}
+	else
+	{
+		long long** t = mult(q_mult(m_1, k / 2, m), 2, m);
+		long long sum;
+		long long** ip = new long long* [2];
+		for (int i = 0; i < 2; i++)
+		{
+			ip[i] = new long long[2];
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				sum = 0;
+				for (int k = 0; k < 2; k++)
+				{
+					sum = (sum + (mulMod(m_1[i][k], t[k][j], m))) % m;
+				}
+				ip[i][j] = sum;
+			}
+		}
+		return ip;
+	}
+}
+
 int main()
 {
-	int n;
-	int m;
+	long long n;
+	long long m;
 	cin >> n >> m;
-	int** mx = new int* [2];
+	long long** mx = new long long* [2];
 	for (int i = 0; i < 2; i++)
 	{
-		mx[i] = new int[2];
+		mx[i] = new long long[2];
 	}
 	mx[0][0] = 1;
 	mx[0][1] = 1;
 	mx[1][0] = 1;
 	mx[1][1] = 0;
-	mx = mult(mx, n - 1, m);
+	mx = q_mult(mx, n - 1, m);
 	cout << mx[0][0];
 }
