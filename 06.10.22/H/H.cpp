@@ -1,70 +1,82 @@
 ﻿#include <iostream>
-#include <string>
 #include <map>
 using namespace std;
-int pr;
 
-string perv(int p, int x)
+long long powMod(long long a, long long b, long long m)
 {
-	int k = 1;
-	int pr = x % p;
-	while (pr != 1)
+	long long res = 1 % m;
+	for (; b > 0; b >>= 1)
 	{
-		pr = (pr * x) % p;
-		k++;
-	}
-	if (k == p - 1)
-	{
-		return "YES";
-	}
-	else
-	{
-		return "NO";
-	}
-}
-
-string log(long long a, long long p) 
-{
-	long long phi_p = p - 1;
-	long long v = 1;
-	long long lim = (int)(sqrt(phi_p)) + 1;
-	map <long long, int> power;
-	long long a_lim = 1;
-	for (int i = 0; i <= lim; i++) 
-	{
-		power[a_lim] = i;
-		a_lim = (a_lim * 1LL * a) % p;
-	}
-	for (int i = 0; i <= lim; i++) 
-	{
-		if (power.count(v))
+		if (b & 1)
 		{
-			if (((power[v] - ((long long)i * lim)) % phi_p) == 0)
-			{
-				return "YES";
-			}
-			else
-			{
-				return "NO";
-			}
+			res = (res * 1LL * (a % m)) % m;
 		}
-		v = (v * 1LL * a_lim) % p;
+		a = ((a % m) * 1LL * (a % m)) % m;
 	}
-	return "NO";
+	return res;
 }
 
+bool prime(long long n)
+{
+	if (n < 2)
+	{
+		return false;
+	}
+	for (long long d = 2; d * d <= n; d++)
+	{
+		if (n % d == 0)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool check(long long a, int* f, int l, long long p)
+{
+	if (a % p == 0)
+	{
+		return 0;
+	}
+	for (int j = 0; j < l; j++)
+	{
+		if (powMod(a, (long long)f[j], p) == 1)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
 
 int main()
 {
-	int n, p;
+	int n;
+	long long p;
+	int l = 0;
 	cin >> n >> p;
 	int* mas = new int[n];
+	int* fact = new int[(p - 1) / 2];
 	for (int i = 0; i < n; i++)
 	{
 		cin >> mas[i];
 	}
+	for (long long i = 2; i <= (p - 1) / 2; i++)
+	{
+		if ((((p - 1) % i) == 0) && (prime(i)))
+		{
+			fact[l] = (p - 1) / i;
+			l++;
+		}
+	}
 	for (int i = 0; i < n; i++)
 	{
-		cout << log(mas[i], p) << endl;
+		if (check(mas[i], fact, l, p))
+		{
+			cout << "YES" << endl;
+		}
+		else
+		{
+			cout << "NO" << endl;
+		}
 	}
 }
