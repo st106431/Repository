@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 using namespace std;
 
-long long mulMod(long long a, long long b, long long m) 
+long long mulMod(long long a, long long b, long long m)
 {
 	long long res = 0;
 	for (; b > 0; b >>= 1)
@@ -16,7 +16,7 @@ long long mulMod(long long a, long long b, long long m)
 }
 
 
-long long** mult(long long** m_1, int k, long long m)
+long long** mult(long long** m_1, long long k, long long m)
 {
 	if (k == 1)
 	{
@@ -44,7 +44,7 @@ long long** mult(long long** m_1, int k, long long m)
 	return ip;
 }
 
-long long** q_mult(long long** m_1, int k, long long m)
+long long** q_mult(long long** m_1, long long k, long long m)
 {
 	if (k == 1)
 	{
@@ -86,7 +86,7 @@ int main()
 	cin >> n >> m;
 	if (n == 0)
 	{
-		cout << 0; 
+		cout << 0;
 		return 0;
 	}
 	if (n == 1)
