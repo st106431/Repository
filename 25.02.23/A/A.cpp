@@ -1,11 +1,12 @@
 ﻿#include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 #include <complex>
 using namespace std;
 
-int const logLimit = 120001;
-int const limit = 1 << logLimit;
+int const logLimit = 20;
+int const limit = 100000;
 vector <int> rev;
 
 void calcRev() 
@@ -82,24 +83,27 @@ int main()
 {
 	calcRev();
 	calcZ();
-	int n, l;
-	vector <Num> a(limit, Num(0));
+	int n;
+	int t;
+	vector <Num> a (limit, Num(0));
 	cin >> n;
 	int* s = new int[n];
 	for (int i = 0; i < n; i++)
 	{
 		cin >> s[i];
-		a[60000 + s[i]] = Num(1);
+		t = 60000 + s[i];
+		a[t] = Num(1);
 	}
 	auto res = fft(a);
-	for (int i = 0; i < res.size(); i++)
+	cout << 2;
+	for (int i = 0; i < res.size() / 16; i++)
 	{
 		res[i] = res[i] * res[i];
 	}
 	auto p = fft(res, true);
 	int k = -1;
 	Num (max) = p[0];
-	for (int i = 0; i <= 5; i += 2)
+	for (int i = 0; i <= 2; i += 2)
 	{
 		cout << p[0] << endl;
 	}
