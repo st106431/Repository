@@ -5,8 +5,8 @@
 #include <complex>
 using namespace std;
 
-int const logLimit = 20;
-int const limit = 100000;
+long long const logLimit = 20;
+long long const limit = 1 << logLimit;
 vector <int> rev;
 
 void calcRev() 
@@ -95,7 +95,6 @@ int main()
 		a[t] = Num(1);
 	}
 	auto res = fft(a);
-	cout << 2;
 	for (int i = 0; i < res.size() / 16; i++)
 	{
 		res[i] = res[i] * res[i];
