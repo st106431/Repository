@@ -95,15 +95,21 @@ int main()
 		a[t] = Num(1);
 	}
 	auto res = fft(a);
-	for (int i = 0; i < res.size() / 16; i++)
+	for (int i = 0; i < res.size(); i++)
 	{
 		res[i] = res[i] * res[i];
 	}
 	auto p = fft(res, true);
 	int k = -1;
 	Num (max) = p[0];
-	for (int i = 0; i <= 2; i += 2)
+	cout << p.size();
+	return 0;
+	for (int i = 0; i <= p.size(); i += 2)
 	{
-		cout << p[0] << endl;
+		if (p[i].real() > max.real())
+		{
+			max = p[i];
+		}
 	}
+	cout << max;
 }
