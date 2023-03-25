@@ -102,7 +102,14 @@ int main()
 	auto p = fft(res, true);
 	int k = -1;
 	Num (max) = p[0];
-	cout << p.size();
+	for (int i = 0; i < p.size(); i++)
+	{
+		if (p[i] != Num(0))
+		{
+			cout << p[i] << endl;
+			cout << i << endl;
+		}
+	}
 	return 0;
 	for (long long i = 0; i <= p.size(); i += 2)
 	{
