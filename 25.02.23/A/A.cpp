@@ -35,7 +35,7 @@ void calcZ()
 	z = vector <Num>(limit);
 	for (int i = 0; i < limit; i++)
 	{
-		z[i] = Num(cos(i * 2 * Pi / limit), sin(i * 2 * Pi / limit));
+		z[i] = Num(cos((long double)i * 2.0 * Pi / limit), sin((long double)i * 2.0 * Pi / limit));
 	}
 }
 

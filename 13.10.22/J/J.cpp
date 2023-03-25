@@ -3,15 +3,15 @@
 #include <cmath>
 using namespace std;
 
-const double C = 1 / sqrt(2 * acos(-1.0));
+const long double C = sqrt(2 * acos(-1.0));
+const int N = 200;
 
-double sum(double x, double y, double* s)
+double sum(long double x, long double y, long double* s)
 {
-	double sum = 0.0;
-	for (int i = 0; i < 15; i++)
+	long double sum = 0.00;
+	for (int i = 0; i < N; i++)
 	{
-		//cout << s[i] * (pow(x, (2 * i) + 1) - pow(y, (2 * i + 1))) << endl;
-		sum += s[i] * (pow(x, (2 * i) + 1) - pow(y, (2 * i + 1)));
+		sum += s[i] * (pow((long double)x, (2 * i) + 1) - s[i] * pow((long double)y, (2 * i + 1)));
 		cout << sum << endl;
 	}
 	return sum;
@@ -19,22 +19,20 @@ double sum(double x, double y, double* s)
 
 int main()
 {
-	double p, q, x_0;
-	double pr;
+	long double p, q, x_0;
 	cin >> p >> q;
 	x_0 = p / q;
-	double* s = new double[15];
-	pr = 1.0;
-	for (int i = 0; i < 15; i++)
+	long double* s = new long double[N];
+	s[0] = 1.0;
+	for (int i = 1; i < N; i++)
 	{
-		s[i] = 1.0 / ((pow(2, i) * pr) * (2 * i + 1));
+		s[i] = (s[i - 1] * (2 * (long double)i - 1)) / ((2 * (long double)i) * (long double)(2 * i + 1));
 		if ((i % 2) != 0)
 		{
 			s[i] = -s[i];
 		}
-		pr *= i + 1;
 	}
-	double res = sum(x_0, -100.8, s) / C;
-	//cout << fixed << setprecision(4) << res;
-	cout << res;
+	long double res = sum(x_0, 3.8, s) / C;
+	cout << fixed << setprecision(10) << res;
+	//cout << res;
 }
