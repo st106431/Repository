@@ -24,9 +24,9 @@ void calcRev()
 	}
 }
 
-using Num = complex <double>;
+using Num = complex <long double>;
 
-double const Pi = acos(-1.0);
+long double const Pi = acos(-1.0);
 
 vector <Num> z;
 
@@ -53,7 +53,7 @@ vector <Num> fft(const vector <Num> & a0, bool inv = false)
 	{
 		reverse(z.begin() + 1, z.end());
 	}
-	for (int k = 0, span = 1, step = limit / 2; k < logLimit; k++, span *= 2, step /= 2) 
+	for (long double k = 0, span = 1, step = static_cast<long double>(limit) / 2; k < logLimit; k++, span *= 2, step /= 2)
 	{
 		for (int i = 0; i < limit; i += 2 * span)
 		{
@@ -62,7 +62,7 @@ vector <Num> fft(const vector <Num> & a0, bool inv = false)
 				int u = i + j;
 				int v = i + j + span;
 				Num x = a[u] + a[v] * z[j * step];
-				Num y = a[u] + a[v] * z[j * step + limit / 2];
+				Num y = a[u] + a[v] * z[j * step + static_cast<long double>(limit) / 2];
 				a[u] = x;
 				a[v] = y;
 			}
@@ -83,15 +83,15 @@ int main()
 {
 	calcRev();
 	calcZ();
-	int n;
-	int t;
+	long double n;
+	long double t;
 	vector <Num> a (limit, Num(0));
 	cin >> n;
-	int* s = new int[n];
+	long double* s = new long double[n];
 	for (int i = 0; i < n; i++)
 	{
 		cin >> s[i];
-		t = 60000 + s[i];
+		t = (long double)60000 + s[i];
 		a[t] = Num(1);
 	}
 	auto res = fft(a);
@@ -104,7 +104,7 @@ int main()
 	Num (max) = p[0];
 	cout << p.size();
 	return 0;
-	for (int i = 0; i <= p.size(); i += 2)
+	for (long long i = 0; i <= p.size(); i += 2)
 	{
 		if (p[i].real() > max.real())
 		{
