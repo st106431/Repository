@@ -53,16 +53,16 @@ vector <Num> fft(const vector <Num> & a0, bool inv = false)
 	{
 		reverse(z.begin() + 1, z.end());
 	}
-	for (long double k = 0, span = 1, step = static_cast<long double>(limit) / 2; k < logLimit; k++, span *= 2, step /= 2)
+	for (long long k = 0, span = 1, step = limit / 2; k < logLimit; k++, span *= 2, step /= 2)
 	{
-		for (int i = 0; i < limit; i += 2 * span)
+		for (long long i = 0; i < limit; i += 2 * span)
 		{
-			for (int j = 0; j < span; j++)
+			for (long long j = 0; j < span; j++)
 			{
-				int u = i + j;
-				int v = i + j + span;
+				long long u = i + j;
+				long long v = i + j + span;
 				Num x = a[u] + a[v] * z[j * step];
-				Num y = a[u] + a[v] * z[j * step + static_cast<long double>(limit) / 2];
+				Num y = a[u] + a[v] * z[j * step + limit / 2];
 				a[u] = x;
 				a[v] = y;
 			}
@@ -83,21 +83,22 @@ int main()
 {
 	calcRev();
 	calcZ();
-	long double n;
-	long double t;
+	int n;
+	long long t;
 	vector <Num> a (limit, Num(0));
+	vector <Num> b (limit, Num(0));
 	cin >> n;
-	long double* s = new long double[n];
+	long long* s = new long long[n];
 	for (int i = 0; i < n; i++)
 	{
 		cin >> s[i];
-		t = (long double)60000 + s[i];
-		a[t] = Num(1);
+		t = s[i];
+		a[t] = Num(1.0);
 	}
 	auto res = fft(a);
 	for (int i = 0; i < res.size(); i++)
 	{
-		res[i] = res[i] * res[i];
+		res[i] = res[i];
 	}
 	auto p = fft(res, true);
 	int k = -1;
