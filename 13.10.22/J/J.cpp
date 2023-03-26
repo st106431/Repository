@@ -26,7 +26,7 @@ long double integral(long double a, long double b, long long n)
 		}
 		else
 		{
-			sum += func(x - (d / 2));
+			sum += func(x);
 			x += d;
 		}
 	}
@@ -39,6 +39,6 @@ int main()
 	long double p, q, x_0;
 	cin >> p >> q;
 	x_0 = p / q;
-	long double res = integral((long double)-20, (long double)x_0, (long long)10000000);
+	long double res = integral((long double)-10, (long double)x_0, (long long)10000000);
 	cout << fixed << setprecision(13) << res;
 }
