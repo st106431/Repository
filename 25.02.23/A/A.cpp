@@ -3,9 +3,10 @@
 #include <algorithm>
 #include <cmath>
 #include <complex>
+#include <iomanip>
 using namespace std;
 
-long long const logLimit = 20;
+long long const logLimit = 19;
 long long const limit = 1 << logLimit;
 vector <int> rev;
 
@@ -86,38 +87,45 @@ int main()
 	int n;
 	long long t;
 	vector <Num> a (limit, Num(0));
-	vector <Num> b (limit, Num(0));
 	cin >> n;
 	long long* s = new long long[n];
 	for (int i = 0; i < n; i++)
 	{
 		cin >> s[i];
-		t = s[i];
-		a[t] = Num(1.0);
+		t = s[i] + (long long)60000;
+		a[t] = Num(1);
 	}
 	auto res = fft(a);
 	for (int i = 0; i < res.size(); i++)
 	{
-		res[i] = res[i];
+		res[i] = res[i] * res[i];
 	}
 	auto p = fft(res, true);
-	int k = -1;
-	Num (max) = p[0];
-	for (int i = 0; i < p.size(); i++)
+	int k = 0;
+	long double max = p[0].real();
+	for (long long i = 0; i < p.size(); i++)
 	{
-		if (p[i] != Num(0))
+		if (p[i].real() > max)
 		{
-			cout << p[i] << endl;
-			cout << i << endl;
+			max = p[i].real();
+			k = i;
 		}
 	}
-	return 0;
-	for (long long i = 0; i <= p.size(); i += 2)
+	double y = k / 2.0 - (double)60000;
+	cout << fixed << setprecision(1) << y << endl;
+	if (((long long)max % 2) == 0)
 	{
-		if (p[i].real() > max.real())
+		cout << fixed << setprecision(0) << max / 2 << endl;
+	}
+	else
+	{
+		cout << fixed << setprecision(0) << (max + 1) / 2 << endl;
+	}
+	for (int i = 0; i <= k / 2; i++)
+	{
+		if (a[i] * a[k - i] == Num(1))
 		{
-			max = p[i];
+			cout << fixed << setprecision(1) << abs(y - (double)i + (double)60000) << " ";
 		}
 	}
-	cout << max;
 }

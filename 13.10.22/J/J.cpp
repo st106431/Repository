@@ -15,21 +15,14 @@ long double integral(long double a, long double b, long long n)
 {
 	long double sum;
 	long double d = (b - a) / (long double)n;
-	long double x = a;
+	long double x = a + d;
 	sum = 0.0;
-	while (x <= b)
+	for (int i = 1; i < n; i++)
 	{
-		if(x == a || x == b)
-		{
-			sum += func(x) / 2;
-			x += d;
-		}
-		else
-		{
 			sum += func(x);
 			x += d;
-		}
 	}
+	sum += func(a) / 2 + func(b) / 2;
 	sum *= d;
 	return sum;
 }
