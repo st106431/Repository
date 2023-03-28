@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <cmath>
 using namespace std;
 
 pair<long double, long double> solve(long double a, long double b, long double c)
@@ -12,9 +13,9 @@ pair<long double, long double> solve(long double a, long double b, long double c
 
 void number(long double x_1, long double y_1, long double r_1, long double x_2, long double y_2, long double r_2)
 {
-	if (x_1 == x_2 && y_1 == y_2)
+	if ((x_1 == x_2) && (y_1 == y_2))
 	{
-		if (r_1 != r_2)
+		if (abs(r_1 - r_2) > pow(10, -10))
 		{
 			cout << "There are no points!!!" << endl << endl;
 			return;
@@ -33,7 +34,7 @@ void number(long double x_1, long double y_1, long double r_1, long double x_2, 
 			cout << "There are no points!!!" << endl << endl;
 			return;
 		}
-		if (r_1 + r_2 == d)
+		if (abs(r_1 + r_2 - d) < pow(10.0, -10))
 		{
 			cout << "There are only 1 of them...." << endl;
 			cout << fixed << setprecision(6) << (r_1 * x_1 + r_2 * x_2) / d << " " << (r_1 * y_1 + r_2 * y_2) / d << endl << endl;
@@ -49,7 +50,7 @@ void number(long double x_1, long double y_1, long double r_1, long double x_2, 
 			auto p = solve(-4 * d * d, 8 * (x_1 - x_2) * (x_1 - x_2) * y_2 - 4 * (y_1 - y_2) * B, q - B * B);
 			long double x = x_2 - sqrt(x_2 * x_2 - p.first * p.first + 2 * p.first * y_2 - c);
 			long double z = x_2 - sqrt(x_2 * x_2 - p.second * p.second + 2 * p.second * y_2 - c);
-			if (x == z)
+			if (abs(x - z) < pow(10.0, -10))
 			{
 				cout << fixed << setprecision(6) << x << " " << min(p.first, p.second) << endl;
 				cout << fixed << setprecision(6) << z << " " << max(p.first, p.second) << endl << endl;
@@ -76,7 +77,7 @@ void number(long double x_1, long double y_1, long double r_1, long double x_2, 
 			cout << "There are no points!!!" << endl << endl;
 			return;
 		}
-		if (abs(r_1 - r_2) == d)
+		if (abs(abs(r_1 - r_2) - d) < pow(10.0, -10))
 		{
 			cout << "There are only 1 of them...." << endl;
 			cout << fixed << setprecision(6) << (r_1 * x_2 - r_2 * x_1) / d << " " << (r_1 * y_2 - r_2 * y_1) / d << endl << endl;
@@ -92,7 +93,7 @@ void number(long double x_1, long double y_1, long double r_1, long double x_2, 
 			auto p = solve(-4 * d * d, 8 * (x_1 - x_2) * (x_1 - x_2) * y_2 - 4 * (y_1 - y_2) * B, q - B * B);
 			long double x = x_2 + sqrt(x_2 * x_2 - p.first * p.first + 2 * p.first * y_2 - c);
 			long double z = x_2 - sqrt(x_2 * x_2 - p.second * p.second + 2 * p.second * y_2 - c);
-			if (x == z)
+			if (abs(x - z) < pow(10.0, -10))
 			{
 				cout << fixed << setprecision(6) << x << " " << min(p.first, p.second) << endl;
 				cout << fixed << setprecision(6) << z << " " << max(p.first, p.second) << endl << endl;
