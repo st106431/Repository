@@ -1,18 +1,15 @@
 ﻿#include <iostream>
+#include <string>
 #include <vector>
-#include <algorithm>
-#include <cmath>
-#include <math.h>
 #include <complex>
 #include <iomanip>
-#include <set>
 using namespace std;
 
 long long const logLimit = 19;
 long long const limit = 1 << logLimit;
 vector <int> rev;
 
-void calcRev() 
+void calcRev()
 {
 	rev = vector <int>(limit, 0);
 	for (int i = 0; i < limit; i++)
@@ -33,7 +30,7 @@ long double const Pi = acos(-1.0);
 
 vector <Num> z;
 
-void calcZ() 
+void calcZ()
 {
 	z = vector <Num>(limit);
 	for (int i = 0; i < limit; i++)
@@ -42,15 +39,15 @@ void calcZ()
 	}
 }
 
-vector <Num> fft(const vector <Num> & a0, bool inv = false) 
+vector <Num> fft(const vector <Num>& a0, bool inv = false)
 {
 	vector <Num> a = a0;
 	for (int i = 0; i < limit; i++)
 	{
 		if (i < rev[i])
 		{
-			swap(a[i], a[rev[i]]); 
-		} 
+			swap(a[i], a[rev[i]]);
+		}
 	}
 	if (inv)
 	{
@@ -86,16 +83,12 @@ int main()
 {
 	calcRev();
 	calcZ();
-	int n;
-	long long t;
-	vector <Num> a (limit, Num(0));
-	cin >> n;
-	long long* s = new long long[n];
-	for (int i = 0; i < n; i++)
+	string s;
+	cin >> s;
+	vector <Num> a(limit, Num(0));
+	for (int i = 0; i < s.length(); i++)
 	{
-		cin >> s[i];
-		t = s[i] + (long long)60000;
-		a[t] = Num(1);
+		a[i] = Num((int)s[i] - 48);
 	}
 	auto res = fft(a);
 	for (int i = 0; i < res.size(); i++)
@@ -103,26 +96,21 @@ int main()
 		res[i] = res[i] * res[i];
 	}
 	auto p = fft(res, true);
-	int k = 0;
-	long double max = p[0].real();
+	Num sum = 0;
 	for (long long i = 0; i < p.size(); i++)
 	{
-		if (p[i].real() > max)
+		if (a[i / 2] == Num(1))
 		{
-			max = p[i].real();
-			k = i;
+			if ((i % 2) == 0)
+			{
+				sum += (p[i] - Num(1));
+			}
+			else
+			{
+				sum += p[i];
+			}
+			cout << fixed << setprecision(2) << p[i].real() << endl;
 		}
 	}
-	double y = (k / 2.0) - (double)60000;
-	cout << fixed << setprecision(1) << y << endl;
-	set <long double> circles;
-	for (int i = 0; i < n; i++)
-	{
-		circles.insert(abs(y - s[i]));
-	}
-	cout << fixed << setprecision(0) << circles.size() << endl;
-	for (auto elem : circles)
-	{
-		cout << fixed << setprecision(1) << elem << " ";
-	}
+	cout << fixed << setprecision(0) << abs(sum.real()) / 2;
 }
