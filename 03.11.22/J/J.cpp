@@ -29,17 +29,19 @@ int main()
 	res[0] = 0;
 	res[1] = s[0][0];
 	res[2] = min(s[0][0] + s[1][0], s[0][1]);
+	res[3] = min(min(s[0][2], s[0][0] + s[1][1]), s[0][0] + s[1][0] + s[2][0]);
+	res[3] = min(res[3], s[0][1] + s[1][1]);
 	if (n == 1)
 	{
-		cout << 0;
+		cout << s[0][0];
 		return 0;
 	}
 	if (n <= 3)
 	{
-		cout << res[n - 1];
+		cout << res[n];
 		return 0;
 	}
-	for (int i = 3; i <= n - 1; i++)
+	for (int i = 4; i <= n; i++)
 	{
 		res[i] = min(min(res[i - 1] + s[i - 1][0], res[i - 2] + s[i - 2][1]), res[i - 2] + s[i - 2][0] + s[i - 1][0]);
 		res[i] = min(res[i], res[i - 3] + s[i - 3][2]);
@@ -49,5 +51,5 @@ int main()
 		res[i] = min(res[i], res[i - 2] + s[i - 3][1] + s[i - 2][1]);
 		res[i] = min(min(res[i], res[i - 1] + s[i - 3][2]), res[i - 1] + s[i - 2][1]);
 	}
-	cout << res[n - 1];
+	cout << res[n];
 }

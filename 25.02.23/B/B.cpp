@@ -39,7 +39,7 @@ void calcZ()
 	}
 }
 
-vector <Num> fft(const vector <Num>& a0, bool inv = false)
+vector <Num> fft(const vector <Num> & a0, bool inv = false)
 {
 	vector <Num> a = a0;
 	for (int i = 0; i < limit; i++)
@@ -96,21 +96,13 @@ int main()
 		res[i] = res[i] * res[i];
 	}
 	auto p = fft(res, true);
-	Num sum = 0;
+	long long sum = 0;
 	for (long long i = 0; i < p.size(); i++)
 	{
-		if (a[i / 2] == Num(1))
+		if (((long long)(ceil(p[i].real())) % 2) == 1)
 		{
-			if ((i % 2) == 0)
-			{
-				sum += (p[i] - Num(1));
-			}
-			else
-			{
-				sum += p[i];
-			}
-			cout << fixed << setprecision(2) << p[i].real() << endl;
+			sum += (long long)ceil(p[i].real()) / 2;
 		}
 	}
-	cout << fixed << setprecision(0) << abs(sum.real()) / 2;
+	cout << sum;
 }
