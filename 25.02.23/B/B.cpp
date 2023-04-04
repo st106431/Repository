@@ -99,9 +99,9 @@ int main()
 	long long sum = 0;
 	for (long long i = 0; i < p.size(); i++)
 	{
-		if (((long long)(ceil(p[i].real())) % 2) == 1)
+		if (((long long)(round(p[i].real())) % 2) == 1)
 		{
-			sum += (long long)ceil(p[i].real()) / 2;
+			sum += (long long)round(p[i].real()) / 2;
 		}
 	}
 	cout << sum;
