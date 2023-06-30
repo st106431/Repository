@@ -48,7 +48,5 @@ int main()
 	iota(w.begin(), w.end(), 0);
 	vector<int>::iterator it_1;
 	it_1 = find_if(w.begin(), w.end(), in);
-	{
-		cout << *it_1;
-	}
+	cout << *it_1;
 }
